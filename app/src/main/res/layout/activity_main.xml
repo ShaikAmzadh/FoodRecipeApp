@@ -35,6 +35,20 @@
                 android:layout_alignParentEnd="true"/>
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
+    <androidx.cardview.widget.CardView
+        app:cardElevation="8dp"
+        app:cardBackgroundColor="@color/orange"
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:searchIcon="@drawable/ic_search"
+            app:iconifiedByDefault="false" />
+    </androidx.cardview.widget.CardView>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_random"
         android:layout_margin="4dp"

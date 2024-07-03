@@ -10,6 +10,7 @@ import android.widget.Toast
 import android.widget.Toast.*
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var recyclerView: RecyclerView
     lateinit var spinner: Spinner
     var tags:ArrayList<String> = arrayListOf()
+    lateinit var searchView:SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +35,23 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         dialog= ProgressDialog(this)
         dialog.setTitle("Loading...")
+
+        searchView=findViewById(R.id.searchView_home)
+        searchView.queryHint="Search your recipes..."
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                tags.clear()
+                tags.add(query)
+                manager.getRandomrecipes(randomRecipeResponseListener,tags)
+                dialog.show()
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                // Handle text change
+                return false
+            }
+        })
 
 
         spinner=findViewById(R.id.spinner_tags)

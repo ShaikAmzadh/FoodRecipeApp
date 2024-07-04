@@ -1,6 +1,7 @@
 package com.example.foodrecipeapp2
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodrecipeapp2.Adapters.RandomRecipeAdapter
 import com.example.foodrecipeapp2.Listeners.RandomRecipeResponseListener
+import com.example.foodrecipeapp2.Listeners.RecipeClickListener
 import com.example.foodrecipeapp2.models.RandomRecipeApiResponse
 
 @Suppress("DEPRECATION")
@@ -79,7 +81,7 @@ class MainActivity : AppCompatActivity() {
             recyclerView=findViewById(R.id.recycler_random)
             recyclerView.setHasFixedSize(true)
             recyclerView.layoutManager = GridLayoutManager(this@MainActivity, 1)
-            randomRecipeAdapter= RandomRecipeAdapter(this@MainActivity,response?.recipes)
+            randomRecipeAdapter= RandomRecipeAdapter(this@MainActivity,response?.recipes,recipeClickListener)
             recyclerView.adapter=randomRecipeAdapter
         }
 
@@ -97,6 +99,12 @@ class MainActivity : AppCompatActivity() {
 
         override fun onNothingSelected(parent: AdapterView<*>?) {
             // Your code here
+        }
+    }
+    private val recipeClickListener:RecipeClickListener = object : RecipeClickListener {
+        override fun onRecipeClicked(id: String?) {
+            startActivity(Intent(this@MainActivity,RecipeDetailsActivity::class.java)
+                .putExtra("id",id))
         }
     }
 
